@@ -1,0 +1,17 @@
+{% extends 'backoffice/dashboard.html' %}
+
+{%block dashcontent %}
+
+<h2>Выберите вопрос на который хотите ответить</h2>
+    <div class="grid-x grid-margin-x">
+            <div class="cell">
+                <h3>Список вопросов без ответов</h3>
+                {% for question in questions %}
+                    <a href="../create-answer/{{ question.id }}" class="button hollow">{{ question.title }} / <small>автор: {{ question.author }}</small></a><br>
+                {% empty %}
+                    <p>Нет вопросов требующий ответ</p>
+                {% endfor %}
+            </div>
+    </div>
+
+{% endblock %}

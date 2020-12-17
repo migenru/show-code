@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block title %} {{ product.title }} - {{ product.categoty }} - {% endblock %}
+
+{% block content %}
+<div class="text-center">
+    <hr>
+    <h2></h2>
+    <hr>
+</div>
+<article class="grid-container">
+
+    <div class="grid-x grid-margin-x">
+        <div class="medium-6 cell">
+            <img class="thumbnail" src="https://placehold.it/650x650">
+        </div>
+        <div class="medium-6 large-5 cell large-offset-1">
+            <a href="../../{{ product.categoty.slug }}"><p class="hollow small button">{{ product.categoty }}</p></a>
+            <h3>{{ product.title }}</h3>
+            <p>{{ product.description }}</p>
+            <div class="grid-x grid-padding-x">
+                {% if user.is_authenticated %}
+                <div class="cell shrink">
+                    <form action="." method="post">
+                        {% csrf_token %}
+                        {{ form.as_ul }}
+                        <button type="submit" class="hollow button alert" name="form"><i class="fi-heart"> </i></button>
+                    </form>
+                </div>
+                {% endif %}
+                <div class="cell shrink">
+                    <button class="hollow button" title="сравнить товары"><i class="fi-graph-horizontal"> </i></button>
+                </div>
+                <div class="cell shrink">
+                    <button class="hollow button warning" title="рейтинг"><i class="fi-star"> 4.5</i></button>
+                </div>
+                <div class="cell auto"></div>
+            </div>
+            <ul>
+                <li><strong>Артикул: {{ product.sku }}</strong></li>
+                <li><strong>Рейтинг: {{ product.rating }}</strong></li>
+                <li><strong>Штрихкод: {{ product.barcode }}</strong></li>
+                <li><strong>Количество: {{ product.quentity }}</strong></li>
+            </ul>
+
+
+            <h3>Цена: {{ product.price }} руб.</h3>
+
+            <form action="{% url 'cart:cart_add' product.slug %}" method="POST">
+                {% csrf_token %}
+                {{ form_cart.as_ul }}
+                <button type="submit" class="button large expanded" name='form_cart'>Добавить в корзину</button>
+            </form>
+        </div>
+    </div>
+</article>
+{% endblock %}
+
+

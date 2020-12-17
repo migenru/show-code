@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}Вход - {% endblock %}
+
+{% block content %}
+<div class="text-center"><hr>
+      <h2>Личный кабинет</h2>
+      <hr>
+    </div>
+<article class="grid-container">
+<div class="grid-x grid-margin-x ">
+    <form action="." method="POST">
+        {% csrf_token %}
+        {{form.as_p}}
+        <p><input type="submit" value="вход"></p>
+    </form>
+</div>
+</article>
+{% endblock %}
+
+

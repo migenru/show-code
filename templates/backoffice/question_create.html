@@ -1,0 +1,20 @@
+{% extends 'backoffice/dashboard.html' %}
+
+{%block dashcontent %}
+
+<h2>Создать {{ type }}</h2>
+    <div class="grid-x grid-margin-x">
+            <div class="cell">
+                {% if type_page != 'answer' %}
+                    <form action="{% url 'q_and_a:create-q' %}" method="post">
+                {% else %}
+                    <form action="{% url 'q_and_a:create-a' question.pk %}" method="post">
+                {% endif %}
+                {% csrf_token %}
+                {{form.as_p}}
+                <button type="submit" class="button">Сохранить</button>
+            </form>
+            </div>
+    </div>
+
+{% endblock %}

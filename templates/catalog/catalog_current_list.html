@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block title %}Все товары - {% endblock %}
+
+{% block content %}
+<div class="text-center">
+    <hr>
+    <h2>Товары "{{ cat.title }}"</h2>
+    <hr>
+    <ul class="menu align-right">
+  <li class="menu-text">Сортировать по:</li>
+  <li><a href="?ordering=price">Цене</a></li>
+  <li><a href="?ordering=title">Названию</a></li>
+  <li><a href="?ordering=quentity">Количеству</a></li>
+</ul>
+        <hr>
+
+</div>
+<div>
+
+</div>
+<article class="grid-container">
+    <div class="grid-x grid-margin-x small-up-1 medium-up-2 large-up-3">
+        <div class="grid-x grid-margin-x small-up-2 medium-up-3 large-up-6">
+            {% for product in products %}
+            <div class="cell">
+                <a href="{{ product.get_absolute_url }}">
+                <img class="thumbnail" src="{{ product.img_main }}></a>
+                <h6><a href="{{ product.get_absolute_url }}">{{product.title}}</a></h6>
+                <p>{{ product.quentity }} шт.</p>
+                <p>{{ product.price }} руб.</p>
+                <a href="{{ product.get_absolute_url }}" class="button small expanded hollow">Buy</a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+</article>
+{% endblock %}
+
+

@@ -1,0 +1,100 @@
+{% load static %}
+<!doctype html>
+<html class="no-js" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}{% endblock %}Магазин "ЛЮСТРЫ и ЛАМПЫ"</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.4.3/css/foundation.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/motion-ui/1.2.3/motion-ui.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.4.3/css/foundation-prototype.min.css">
+    <link href='https://cdnjs.cloudflare.com/ajax/libs/foundicons/3.0.0/foundation-icons.css' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="{% static "css/custom.css" %}">
+
+    <!-- optional CDN for Foundation Icons ^^ -->
+  </head>
+  <body>
+
+
+    
+    <!-- Start Top Bar -->
+    <div class="title-bar" data-responsive-toggle="mainNavigation" data-hide-for="medium">
+      <div class="title-bar-left">
+        <button class="menu-icon" type="button" data-toggle="mainNavigation"></button>
+        <div class="title-bar-title">Меню</div>
+      </div>
+      <div class="title-bar-right">
+        "Люстры & Лампы"
+      </div>
+    </div>
+    
+    <div class="top-bar" id="mainNavigation">
+      <div class="top-bar-left">
+        <ul class="dropdown menu vertical medium-horizontal" data-dropdown-menu>
+          <li><a href="{% url 'catalog:index' %}" class="hollow button">"Люстры & Лампы"</a></li>
+          <li><a href="{% url 'catalog:catalog' %}">Каталог</a></li>
+          <li><a href="{% url 'article:blog' %}">Блог</a></li>
+          <li><a href="#">Статьи</a></li>
+          <li><a href="{% url 'article:page' slug='for-customers' %}">Покупателям</a></li>
+          <li><a href="{% url 'q_and_a:index' %}">Вопросы и ответы</a></li>
+          <li><a href="{% url 'article:page' slug='contacts' %}">Контакты</a></li>
+        </ul>
+      </div>
+      <div class="top-bar-right">
+        {% if user.is_authenticated %}
+          <a href="{% url 'backoffice:main' %}" class="large hollow button fi-torso"> </a>
+        {% else %}
+          <a href="{% url 'backoffice:login' %}" class="large hollow button fi-torso"> </a>
+        {% endif %}
+        <a href="{% url 'cart:cart_detail' %}" class="large  button fi-shopping-cart"> {{ cart|length }}</a>
+        <a href="{% url 'catalog:search' %}" class="large button fi-magnifying-glass"> </a>
+      </div>
+    </div>
+    <!-- End Top Bar -->
+
+    {% block content %}
+
+    {% endblock %}
+
+
+        <footer class="callout large secondary">
+          <article class="grid-container">
+          <div class="grid-x">
+            <div class="large-4 cell">
+              <h5>Магазин "Люстры & Лампы"</h5>
+              <p>Curabitur vulputate, ligula lacinia scelerisque tempor, lacus lacus ornare ante, ac egestas est urna sit amet arcu. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Sed molestie augue sit.</p>
+              <p>&copy 2020</p>
+            </h4>
+          </div>
+          <div class="large-3 large-offset-2 cell">
+            <ul class="menu vertical">
+              <li><a href="{% url 'catalog:catalog' %}">Каталог</a></li>
+              <li><a href="#">Блог</a></li>
+              <li><a href="{% url 'article:page' slug='company' %}">О компании</a></li>
+              <li><a href="{% url 'article:page' slug='store' %}#">Магазин</a></li>
+            </ul>
+          </div>
+          <div class="large-3 cell">
+            <ul class="menu vertical">
+              <li><a href="#">Статьи</a></li>
+              <li><a href="{% url 'article:page' slug='for-customers' %}">Покупателям</a></li>
+              <li><a href="{% url 'q_and_a:index'%}">Вопросы и ответы</a></li>
+              <li><a href="{% url 'article:page' slug='contacts' %}">Контакты</a></li>
+            </ul>
+          </div>
+          </article>
+        </footer>
+
+
+
+    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.4.3/js/foundation.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/motion-ui/1.2.3/motion-ui.min.js"></script>
+    {% block code %}
+
+    {% endblock %}
+    <script>
+      $(document).foundation();
+    </script>
+  </body>
+</html>

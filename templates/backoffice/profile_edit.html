@@ -1,0 +1,22 @@
+{% extends 'backoffice/dashboard.html' %}
+
+{%block dashcontent %}
+
+<h2>Редактирование профиля</h2>
+<hr>
+        <div class="cell">Вы зарегистрированы: {{user.date_joined}}</div>
+        <div class="cell">Последнее изменение было: {{user.date_update}}</div>
+<hr>
+    <div class="grid-x grid-margin-x">
+            <div class="cell">
+                <form action="." method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{form.as_p}}
+                <button type="submit" class="button">Сохранить</button>
+            </form>
+            </div>
+
+    </div>
+
+
+{% endblock %}

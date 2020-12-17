@@ -1,0 +1,47 @@
+{% extends 'backoffice/dashboard.html' %}
+
+{%block dashcontent %}
+
+<h2>Популярные страницы</h2>
+<div class="grid-x grid-margin-x  ">
+        <table>
+            <thead>
+            <tr>
+                <th>№ п/п</th>
+                <th>страница</th>
+                <th>кол-во просмотров</th>
+            </thead>
+            <tbody>
+            {% for page, count in populate_pages %}
+            <tr>
+                <td>{{forloop.counter}}</td>
+                <td><a href="{{page}}">{{page}}</a></td>
+                <td>{{count}}</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+</div>
+
+
+<h2>Популярные товары</h2>
+<div class="grid-x grid-margin-x ">
+        <table>
+            <thead>
+            <tr>
+                <th>№ п/п</th>
+                <th>страница</th>
+                <th>кол-во просмотров</th>
+            </thead>
+            <tbody>
+            {% for page, count in populate_products %}
+            <tr>
+                <td>{{forloop.counter}}</td>
+                <td><a href="{{page}}">{{page}}</a></td>
+                <td>{{count}}</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+</div>
+{% endblock %}

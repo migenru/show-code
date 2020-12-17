@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block title %}Блог - {% endblock %}
+
+{% block content %}
+<div class="callout large primary">
+          <div class="text-center">
+            <h1>Наш блог</h1>
+          </div>
+</div>
+<article class="grid-container">
+<!--    LIST POSTS-->
+    {% for post in posts %}
+        <div class="grid-x grid-margin-x" id="content" data-mutate="oyw39l-sticky" data-events="mutate">
+          <div class="medium-9 cell">
+            <div class="blog-post">
+                <a href="page/{{post.slug}}"><h3>{{post.title }}</h3></a>
+              <small><i class="fi-calendar"> {{post.created }}</i></small>
+              <img class="thumbnail" src="../media/{{post.image}}">
+                <p>{{post.content|truncatechars:256 }}</p>
+
+                <div class="callout">
+                <ul class="menu simple">
+                  <li>Автор: {{post.author}}</li>
+                  <li>Комментариев: {{post.comments.count}}</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+    {% endfor %}
+<!--    END LIST POSTS           -->
+<!--    SIDE BAR FOR BLOG        -->
+          <div class="medium-3 cell sticky-container" data-sticky-container="" style="height: 282px;">
+            <div class="sticky is-anchored is-at-top" data-sticky="" data-anchor="content" data-resize="oyw39l-sticky" data-mutate="oyw39l-sticky" data-e="ii0ty3-e" data-events="mutate" style="max-width: 619px; margin-top: 0px; bottom: auto; top: 0px;">
+              <h4>Тэги</h4>
+              <ul>
+                  <li><a href="#">1</a></li>
+              </ul>
+
+              <h4>Авторы</h4>
+              <ul>
+                  <li><a href="#">admin</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+<!--    END SIDE BAR FOR BLOG -->
+    </article>
+{% endblock %}
+
+

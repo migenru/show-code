@@ -1,0 +1,142 @@
+{% extends 'backoffice/dashboard.html' %}
+
+{% block dashcontent %}
+
+    <h2>Конструктор подбора освещения</h2>
+
+    <div class="grid-x grid-margin-x ">
+        <div class="cell">
+            <form action="" method="post" name="form">
+                {% csrf_token %}
+                <div class="grid-x grid-padding-x">
+                    <fieldset class="cell">
+                        <legend>Тип домовладения:</legend>
+                        <input type="radio" name="home" value="house" id="homeHouse" required><label for="homeHouse">Частный
+                        дом</label>
+                        <input type="radio" name="home" value="appartament" id="homeAppartament"><label
+                            for="homeAppartament">Кваритира</label>
+                    </fieldset>
+                </div>
+
+                <div>
+                    <div class="bordered grid-x cell" id="formroom" style="padding: 20px; margin-bottom: 20px;">
+                        <label for="typeroom">Выбрать тип комнаты
+                            <select name="typeroom" id="typeroom">
+                                <option value="bed">Спальня</option>
+                                <option value="kitchen">Кухня</option>
+                                <option value="living">Гостинная</option>
+                                <option value="kids">Детская</option>
+                                <option value="bath">Ванная</option>
+                                <option value="wc">Туалет</option>
+                                <option value="other">Коридоры</option>
+                            </select>
+                        </label>
+
+                        <label style="margin-left: 30px">площадь (кв.м)
+                            <input type="number" name="square" id="square" min="1" step="1" value="1">
+                        </label>
+                    </div>
+                    <div class="small-6 cell">
+                        <a id="btn-plus" class="button hollow">+ Добавить комнату</a>
+                    </div>
+                    <script>
+                        let idCount = 0
+                        document.getElementById('formroom').style.display = 'none';
+                        const $btnplus = document.getElementById('btn-plus');
+                        $btnplus.addEventListener('click', function () {
+                            cloningForm();
+                        });
+
+                        function cloningForm() {
+                            let formRoom = formroom.cloneNode(true);
+                            idCount++
+                            formRoom.id = 'formroom_' + idCount;
+                            formRoom.children[0].children[0].setAttribute('name', 'typeroom_' + idCount);
+                            formRoom.children[1].children[0].setAttribute('name', 'square_' + idCount);
+                            formRoom.children[1].children[0].value = '0';
+                            document.getElementById('countroom').value = idCount;
+                            formroom.before(formRoom);
+                            document.getElementById(formRoom.id).style.display = 'inline-flex';
+                        }
+
+                    </script>
+                    <input type="hidden" name="countroom" value="0" id="countroom">
+                    <button type="submit" class="button success">Расчитать</button>
+                </div>
+            </form>
+            <div class="callout success secondary large" data-closable="slide-out-right">
+                <h3>Результат:</h3>
+                <p>{{ data }}</p>
+                <hr>
+                <h4>Рекомендуемые товары:</h4>
+                <a href="{{ product.get_absolute_url }}">{{ product.title }}</a><br>
+                <hr>
+                <h4>Ваши комнаты</h4>
+
+                {% if dictroom.bed %}
+                    <p><strong>Спальни: </strong>{{ dictroom.bed_count }} шт, общая площадь {{ dictroom.bed }} кв.м</p>
+                    <p>{{ dictroom.bed_description }}</p>
+                    {% for product in dictroom.bed_product %}
+                        <p><a href="{{ product.get_absolute_url }}">{{ product }} - {{ product.price }} руб.</a></p>
+                    {% endfor %}
+                {% endif %}
+
+                {% if dictroom.kitchen %}
+                    <p><strong>Кухни: </strong>{{ dictroom.kitchen_count }} шт, общая площадь {{ dictroom.kitchen }}
+                        кв.м</p>
+                    <p>{{ dictroom.kitchen_description }}</p>
+                    {% for product in dictroom.kitchen_product %}
+                        <p><a href="{{ product.get_absolute_url }}">{{ product }} - {{ product.price }} руб.</a></p>
+                    {% endfor %}
+                {% endif %}
+
+                {% if dictroom.living %}
+                    <p><strong>Гостинные: </strong>{{ dictroom.living_count }} шт, общая площадь {{ dictroom.living }}
+                        кв.м</p>
+                    <p>{{ dictroom.living_description }}</p>
+                    {% for product in dictroom.living_product %}
+                        <p><a href="{{ product.get_absolute_url }}">{{ product }} - {{ product.price }} руб.</a></p>
+                    {% endfor %}
+                {% endif %}
+
+                {% if dictroom.kids %}
+                    <p><strong>Детские комнаты: </strong>{{ dictroom.kids_count }} шт, общая площадь {{ dictroom.kids }}
+                        кв.м</p>
+                    <p>{{ dictroom.kids_description }}</p>
+                    {% for product in dictroom.kids_product %}
+                        <p><a href="{{ product.get_absolute_url }}">{{ product }} - {{ product.price }} руб.</a></p>
+                    {% endfor %}
+                {% endif %}
+
+                {% if dictroom.bath %}
+                    <p><strong>Ванные: </strong>{{ dictroom.bath_count }} шт, общая площадь {{ dictroom.bath }} кв.м</p>
+                    <p>{{ dictroom.bath_description }}</p>
+                    {% for product in dictroom.bath_product %}
+                        <p><a href="{{ product.get_absolute_url }}">{{ product }} - {{ product.price }} руб.</a></p>
+                    {% endfor %}
+                {% endif %}
+
+                {% if dictroom.wc %}
+                    <p><strong>Туалеты: </strong>{{ dictroom.wc_count }} шт, общая площадь {{ dictroom.wc }} кв.м</p>
+                    <p>{{ dictroom.wc_description }}</p>
+                    {% for product in dictroom.wc_product %}
+                        <p><a href="{{ product.get_absolute_url }}">{{ product }} - {{ product.price }} руб.</a></p>
+                    {% endfor %}
+                {% endif %}
+
+                {% if dictroom.other %}
+                    <p><strong>Коридоры: </strong>{{ dictroom.other_count }} шт, общая площадь {{ dictroom.other }} кв.м
+                    </p>
+                    <p>{{ dictroom.other_description }}</p>
+                    {% for product in dictroom.other_product %}
+                        <p><a href="{{ product.get_absolute_url }}">{{ product }} - {{ product.price }} руб.</a></p>
+                    {% endfor %}
+                {% endif %}
+
+
+            </div>
+        </div>
+
+
+    </div>
+{% endblock %}

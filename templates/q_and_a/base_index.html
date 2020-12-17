@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}Вопросы и ответы - {% endblock %}
+
+{% block content %}
+<div class="text-center">
+    <hr>
+    <h2>Вопросы и ответы</h2>
+    <hr>
+</div>
+<article class="grid-container">
+
+    <div class="grid-x grid-margin-x small-up-1 medium-up-1 large-up-1">
+        {% for question in questions %}
+        <div class="callout large cell">
+            <h5>{{ question.title}}</h5>
+            <p>{{ question.content}}</p>
+            <blockquote>{{ question.answer }}</blockquote>
+        </div>
+        {% endfor %}
+    </div>
+
+</article>
+{% endblock %}
+
+

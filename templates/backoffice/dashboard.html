@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block title %}Личный кабинет - {% endblock %}
+
+{% block content %}
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
+
+<div class="app-dashboard shrink-medium">
+
+  <div class="app-dashboard-body off-canvas-wrapper">
+    <div id="app-dashboard-sidebar" class="app-dashboard-sidebar position-left off-canvas off-canvas-absolute reveal-for-medium" data-off-canvas>
+      <div class="app-dashboard-sidebar-title-area">
+        <div class="app-dashboard-close-sidebar">
+<!--            <h4 class="text-center">Личный кабинет</h4>-->
+<!--            <h5 class="text-center">{{ fullname }}</h5>-->
+          <h5 class="app-dashboard-sidebar-block-title button">Личный кабинет</h5>
+          <!-- Close button -->
+          <button id="close-sidebar" data-app-dashboard-toggle-shrink class="app-dashboard-sidebar-close-button show-for-medium" aria-label="Close menu" type="button">
+            <span aria-hidden="true"><a href="#"><i class="large fa fa-angle-double-left"></i></a></span>
+          </button>
+        </div>
+        <div class="app-dashboard-open-sidebar">
+          <button id="open-sidebar" data-app-dashboard-toggle-shrink class="app-dashboard-open-sidebar-button show-for-medium" aria-label="open menu" type="button">
+            <span aria-hidden="true"><a href="#"><i class="large fa fa-angle-double-right"></i></a></span>
+          </button>
+        </div>
+      </div>
+      <div class="app-dashboard-sidebar-inner">
+        <ul class="menu vertical">
+            {% if fullname.avatar %}
+            <p class="text-center">
+                <img src="/media/{{fullname.avatar}}" alt="" width="140px" style="border-radius: 50%; border: #1779ba 1px solid">
+            </p>
+            {% endif %}
+          <h5 class="text-center">{{fullname.get_full_name}}</h5>
+          <li><a href="{% url 'backoffice:create-page' %}" class="is-active">
+            <i class="large fa fa-file-text"></i><span class="app-dashboard-sidebar-text">Создать страницу</span>
+          </a></li>
+            {% if fullname.user_type == 'C' %}
+              <li><a href="{% url 'q_and_a:create-q' %}">
+                <i class="large fa fa-question-circle-o"></i><span class="app-dashboard-sidebar-text">Задать вопрос</span>
+              </a></li>
+            {% else %}
+              <li><a href="{% url 'q_and_a:questions' %}">
+                <i class="large fa fa-question-circle-o"></i><span class="app-dashboard-sidebar-text">Ответить на вопрос</span>
+              </a></li>
+            {% endif %}
+
+          <li><a href="{% url 'backoffice:favorite' %}">
+            <i class="large fa fa-star"></i><span class="app-dashboard-sidebar-text">Избранный товар</span>
+          </a></li>
+          <li><a href="{% url 'backoffice:profile-edit' %}">
+            <i class="large fa fa-cog"></i><span class="app-dashboard-sidebar-text">Настройка профиля</span>
+          </a></li>
+            <li><a href="{% url 'backoffice:analitics'%}">
+            <i class="large fa fa-pie-chart"></i><span class="app-dashboard-sidebar-text">Аналитика сайта</span>
+          </a></li>
+            <li><a href="{% url 'backoffice:constructor-light'%}">
+            <i class="large fa fi-lightbulb"></i><span class="app-dashboard-sidebar-text">Подбор освещения</span>
+          </a></li>
+
+          <li><a href="{% url 'backoffice:logout' %}">
+            <i class="large fa fa-sign-out"></i><span class="app-dashboard-sidebar-text">Выход</span>
+          </a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="app-dashboard-body-content off-canvas-content" data-off-canvas-content>
+        {% block dashcontent %}
+        <h2>Введение</h2>
+        <p>В личном кабинете можно сделать следующие операции:</p>
+        <ul>
+            <li>Создать вопрос</li>
+            <li>Создать ответ</li>
+            <li>Просмотреть избранные товары</li>
+            <li>Просмотреть заказы</li>
+            <li>Отредактировать профиль</li>
+        </ul>
+        {% endblock %}
+
+    </div>
+  </div>
+</div>
+
+
+
+{% endblock %}
+
+{% block code %}
+    <script src="{% static "js/dashboard.js" %}"></script>
+{% endblock %}
+
+
